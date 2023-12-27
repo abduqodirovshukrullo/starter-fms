@@ -17,7 +17,7 @@ import authV2MaskLight from '@images/pages/misc-mask-light.png'
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
 const isPasswordVisible = ref(false)
-const email = ref('admin@demo.com')
+const username = ref('admin@demo.com')
 const password = ref('admin')
 const rememberMe = ref(false)
 </script>
@@ -70,29 +70,17 @@ const rememberMe = ref(false)
             Please sign-in to your account and start the adventure
           </p>
         </VCardText>
-        <VCardText>
-          <VAlert
-            color="primary"
-            variant="tonal"
-          >
-            <p class="text-caption mb-2">
-              Admin Email: <strong>admin@demo.com</strong> / Pass: <strong>admin</strong>
-            </p>
-            <p class="text-caption mb-0">
-              Client Email: <strong>client@demo.com</strong> / Pass: <strong>client</strong>
-            </p>
-          </VAlert>
-        </VCardText>
+
         <VCardText>
           <VForm @submit.prevent="() => {}">
             <VRow>
               <!-- email -->
               <VCol cols="12">
                 <VTextField
-                  v-model="email"
-                  label="Email"
-                  type="email"
-                  :rules="[requiredValidator, emailValidator]"
+                  v-model="username"
+                  label="username"
+                  type="text"
+                  :rules="[requiredValidator]"
                 />
               </VCol>
 
@@ -129,7 +117,7 @@ const rememberMe = ref(false)
               </VCol>
 
               <!-- create account -->
-              <VCol
+              <!-- <VCol
                 cols="12"
                 class="text-center"
               >
@@ -140,23 +128,23 @@ const rememberMe = ref(false)
                 >
                   Create an account
                 </a>
-              </VCol>
-              <VCol
+              </VCol> -->
+              <!-- <VCol
                 cols="12"
                 class="d-flex align-center"
               >
                 <VDivider />
                 <span class="mx-4">or</span>
                 <VDivider />
-              </VCol>
+              </VCol> -->
 
               <!-- auth providers -->
-              <VCol
+              <!-- <VCol
                 cols="12"
                 class="text-center"
               >
                 <AuthProvider />
-              </VCol>
+              </VCol> -->
             </VRow>
           </VForm>
         </VCardText>
