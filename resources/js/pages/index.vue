@@ -23,3 +23,10 @@
     </VCard>
   </div>
 </template>
+
+<script setup></script>
+<route lang="yaml">
+  meta:
+    action: manage
+    subject: inspector
+</route>
