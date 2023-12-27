@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('dashboard')->name('dashboard.')->group(__DIR__.'/dashboard/index.php');
+Route::prefix('sign-in')->name('sign-in.')->group(__DIR__.'/auth/index.php');
