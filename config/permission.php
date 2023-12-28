@@ -28,6 +28,8 @@ return [
 
     ],
 
+    'use_passport_client_credentials'=>true,
+
     'table_names' => [
 
         /*
