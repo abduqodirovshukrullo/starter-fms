@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Passport::ignoreRoutes();
     }
 
     /**
@@ -24,6 +24,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Passport::ignoreRoutes();
     }
 }

@@ -16,10 +16,9 @@ class SignInController extends Controller
 
         $credentials = $request->validated();
         
-        if(!Auth::attempt($credentials)){
+        if(!Auth::guard('web')->attempt($credentials)){
             return $this->respondUnAuthorized();
         }
-
         $user = User::where(['name'=>$credentials['name']])->first();
 
         $tokenResult = $user->createToken('Personal Access Token');
