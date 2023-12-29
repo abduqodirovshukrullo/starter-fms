@@ -1,37 +1,38 @@
 <script setup>
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
-import {
-  emailValidator,
-  requiredValidator,
-} from '@validators'
 import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
 import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
 import authV2LoginIllustrationDark from '@images/pages/auth-v2-login-illustration-dark.png'
 import authV2LoginIllustrationLight from '@images/pages/auth-v2-login-illustration-light.png'
 import authV2MaskDark from '@images/pages/misc-mask-dark.png'
 import authV2MaskLight from '@images/pages/misc-mask-light.png'
+import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { themeConfig } from '@themeConfig'
 
+definePage({ meta: { layout: 'blank' } })
+
+const form = ref({
+  email: '',
+  password: '',
+  remember: false,
+})
+
+const isPasswordVisible = ref(false)
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
-const isPasswordVisible = ref(false)
-const username = ref('admin@demo.com')
-const password = ref('admin')
-const rememberMe = ref(false)
 </script>
 
 <template>
   <VRow
     no-gutters
-    class="auth-wrapper"
+    class="auth-wrapper bg-surface"
   >
     <VCol
-      lg="8"
-      class="d-none d-lg-flex"
+      md="8"
+      class="d-none d-md-flex"
     >
-      <div class="position-relative auth-bg rounded-lg w-100 ma-8 me-0">
+      <div class="position-relative bg-background rounded-lg w-100 ma-8 me-0">
         <div class="d-flex align-center justify-center w-100 h-100">
           <VImg
             max-width="505"
@@ -41,16 +42,16 @@ const rememberMe = ref(false)
         </div>
 
         <VImg
-          :src="authThemeMask"
           class="auth-footer-mask"
+          :src="authThemeMask"
         />
       </div>
     </VCol>
 
     <VCol
       cols="12"
-      lg="4"
-      class="d-flex align-center justify-center"
+      md="4"
+      class="auth-card-v2 d-flex align-center justify-center"
     >
       <VCard
         flat
@@ -62,34 +63,33 @@ const rememberMe = ref(false)
             :nodes="themeConfig.app.logo"
             class="mb-6"
           />
-
-          <h5 class="text-h5 font-weight-semibold mb-1">
-            Welcome to {{ themeConfig.app.title }}! 👋🏻
-          </h5>
+          <h4 class="text-h4 mb-1">
+            Welcome to <span class="text-capitalize">{{ themeConfig.app.title }}</span>! 👋🏻
+          </h4>
           <p class="mb-0">
             Please sign-in to your account and start the adventure
           </p>
         </VCardText>
-
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <VForm @submit.prevent="() => { }">
             <VRow>
               <!-- email -->
               <VCol cols="12">
-                <VTextField
-                  v-model="username"
-                  label="username"
-                  type="text"
-                  :rules="[requiredValidator]"
+                <AppTextField
+                  v-model="form.email"
+                  autofocus
+                  label="Email"
+                  type="email"
+                  placeholder="johndoe@email.com"
                 />
               </VCol>
 
               <!-- password -->
               <VCol cols="12">
-                <VTextField
-                  v-model="password"
+                <AppTextField
+                  v-model="form.password"
                   label="Password"
-                  :rules="[requiredValidator]"
+                  placeholder="············"
                   :type="isPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
@@ -97,7 +97,7 @@ const rememberMe = ref(false)
 
                 <div class="d-flex align-center flex-wrap justify-space-between mt-2 mb-4">
                   <VCheckbox
-                    v-model="rememberMe"
+                    v-model="form.remember"
                     label="Remember me"
                   />
                   <a
@@ -117,34 +117,38 @@ const rememberMe = ref(false)
               </VCol>
 
               <!-- create account -->
-              <!-- <VCol
+              <VCol
                 cols="12"
-                class="text-center"
+                class="text-center text-base"
               >
                 <span>New on our platform?</span>
+
                 <a
                   class="text-primary ms-2"
                   href="#"
                 >
                   Create an account
                 </a>
-              </VCol> -->
-              <!-- <VCol
+              </VCol>
+
+              <VCol
                 cols="12"
                 class="d-flex align-center"
               >
                 <VDivider />
+
                 <span class="mx-4">or</span>
+
                 <VDivider />
-              </VCol> -->
+              </VCol>
 
               <!-- auth providers -->
-              <!-- <VCol
+              <VCol
                 cols="12"
                 class="text-center"
               >
                 <AuthProvider />
-              </VCol> -->
+              </VCol>
             </VRow>
           </VForm>
         </VCardText>
@@ -156,11 +160,3 @@ const rememberMe = ref(false)
 <style lang="scss">
 @use "@core-scss/template/pages/page-auth.scss";
 </style>
-
-<route lang="yaml">
-meta:
-  layout: blank
-  action: read
-  subject: Auth
-  redirectIfLoggedIn: true
-</route>

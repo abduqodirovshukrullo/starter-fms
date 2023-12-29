@@ -7,7 +7,7 @@
       <VCardText>All the best for your new project.</VCardText>
       <VCardText>
         Please make sure to read our <a
-          href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
+          href="https://demos.pixinvent.com/vuexy-vuejs-admin-template/documentation/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-decoration-none"
@@ -23,10 +23,11 @@
     </VCard>
   </div>
 </template>
-
-<script setup></script>
-<route lang="yaml">
-  meta:
-    action: manage
-    subject: inspector
-</route>
+<script setup>
+definePage({
+  meta: {
+    action: 'read',
+    subject: 'AclDemo',
+  },
+})
+</script>

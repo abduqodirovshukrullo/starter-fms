@@ -10,6 +10,7 @@ watch(buyNowUrl, val => {
 
 <template>
   <VBtn
+    id="buy-now-btn"
     color="error"
     class="product-buy-now"
     :href="buyNowUrl"
@@ -29,7 +30,7 @@ watch(buyNowUrl, val => {
   inset-block-end: 5%;
   inset-inline-end: 79px;
 
-  .v-application &.v-btn.v-btn--elevated {
+  body &.v-btn.v-btn--elevated {
     box-shadow: 0 1px 20px 1px rgb(var(--v-theme-error)) !important;
 
     &:hover {

@@ -1,15 +1,15 @@
 <script setup>
-import {
-  injectionKeyIsVerticalNavHovered,
-  useLayouts,
-} from '@layouts'
+import { TransitionGroup } from 'vue'
+import { layoutConfig } from '@layouts'
 import {
   TransitionExpand,
   VerticalNavLink,
 } from '@layouts/components'
-import { config } from '@layouts/config'
 import { canViewNavMenuGroup } from '@layouts/plugins/casl'
+import { useLayoutConfigStore } from '@layouts/stores/config'
+import { injectionKeyIsVerticalNavHovered } from '@layouts/symbols'
 import {
+  getDynamicI18nProps,
   isNavGroupActive,
   openGroups,
 } from '@layouts/utils'
@@ -21,14 +21,21 @@ const props = defineProps({
   },
 })
 
-defineOptions({ name: 'VerticalNavGroup' })
+defineOptions({
+  name: 'VerticalNavGroup',
+})
 
 const route = useRoute()
 const router = useRouter()
-const { width: windowWidth } = useWindowSize()
-const { isVerticalNavMini, dynamicI18nProps } = useLayouts()
-const hideTitleAndBadge = isVerticalNavMini(windowWidth)
+const configStore = useLayoutConfigStore()
+const hideTitleAndBadge = configStore.isVerticalNavMini()
+
+/*ℹ️ We provided default value `ref(false)` because inject will return `T | undefined`
+Docs: https://vuejs.org/api/composition-api-dependency-injection.html#inject
+*/
 const isVerticalNavHovered = inject(injectionKeyIsVerticalNavHovered, ref(false))
+
+//   isGroupOpen.value = value ? false : isGroupActive.value
 
 // })
 const isGroupActive = ref(false)
@@ -52,17 +59,23 @@ const collapseChildren = children => {
   })
 }
 
+/*Watch for route changes, more specifically route path. Do note that this won't trigger if route's query is updated.
+
+updates isActive & isOpen based on active state of group.
+*/
 watch(() => route.path, () => {
   const isActive = isNavGroupActive(props.item.children, router)
 
   // Don't open group if vertical nav is collapsed and window size is more than overlay nav breakpoint
-  isGroupOpen.value = isActive && !isVerticalNavMini(windowWidth, isVerticalNavHovered).value
+  isGroupOpen.value = isActive && !configStore.isVerticalNavMini(isVerticalNavHovered).value
   isGroupActive.value = isActive
 }, { immediate: true })
 watch(isGroupOpen, val => {
 
   // Find group index for adding/removing group from openGroups array
   const grpIndex = openGroups.value.indexOf(props.item.title)
+
+  // update openGroups array for addition/removal of current group
 
   // If group is opened => Add it to `openGroups` array
   if (val && grpIndex === -1) {
@@ -72,10 +85,22 @@ watch(isGroupOpen, val => {
     collapseChildren(props.item.children)
   }
 }, { immediate: true })
+
+/*Watch for openGroups
+
+It will help in making vertical nav adapting the behavior of accordion.
+If we open multiple groups without navigating to any route we must close the inactive or temporarily opened groups.
+
+😵‍💫 Gotchas:
+* If we open inactive group then it will auto close that group because we close groups based on active state.
+Goal of this watcher is auto close groups which are not active when openGroups array is updated.
+So, we have to find a way to do not close recently opened inactive group.
+For this we will fetch recently added group in openGroups array and won't perform closing operation if recently added group is current group
+*/
 watch(openGroups, val => {
 
   // Prevent closing recently opened inactive group.
-  const lastOpenedGroup = val[val.length - 1]
+  const lastOpenedGroup = val.at(-1)
   if (lastOpenedGroup === props.item.title)
     return
   const isActive = isNavGroupActive(props.item.children, router)
@@ -92,9 +117,14 @@ watch(openGroups, val => {
 }, { deep: true })
 
 // ℹ️ Previously instead of below watcher we were using two individual watcher for `isVerticalNavHovered`, `isVerticalNavCollapsed` & `isLessThanOverlayNavBreakpoint`
-watch(isVerticalNavMini(windowWidth, isVerticalNavHovered), val => {
+watch(configStore.isVerticalNavMini(isVerticalNavHovered), val => {
   isGroupOpen.value = val ? false : isGroupActive.value
 })
+
+//   isGroupOpen.value = value ? false : isGroupActive.value
+
+// })
+const isMounted = useMounted()
 </script>
 
 <template>
@@ -114,15 +144,23 @@ watch(isVerticalNavMini(windowWidth, isVerticalNavHovered), val => {
       @click="isGroupOpen = !isGroupOpen"
     >
       <Component
-        :is="config.app.iconRenderer || 'div'"
-        v-bind="item.icon || config.verticalNav.defaultNavItemIconProps"
+        :is="layoutConfig.app.iconRenderer || 'div'"
+        v-bind="item.icon || layoutConfig.verticalNav.defaultNavItemIconProps"
         class="nav-item-icon"
       />
-      <TransitionGroup name="transition-slide-x">
+      <!--
+        ℹ️ isMounted is workaround of nuxt's hydration issue:
+        https://github.com/vuejs/core/issues/6715
+      -->
+      <Component
+        :is="isMounted ? TransitionGroup : 'div'"
+        name="transition-slide-x"
+        v-bind="!isMounted ? { class: 'd-flex align-center flex-grow-1' } : undefined"
+      >
         <!-- 👉 Title -->
         <Component
-          :is=" config.app.enableI18n ? 'i18n-t' : 'span'"
-          v-bind="dynamicI18nProps(item.title, 'span')"
+          :is=" layoutConfig.app.i18n.enable ? 'i18n-t' : 'span'"
+          v-bind="getDynamicI18nProps(item.title, 'span')"
           v-show="!hideTitleAndBadge"
           key="title"
           class="nav-item-title"
@@ -132,8 +170,8 @@ watch(isVerticalNavMini(windowWidth, isVerticalNavHovered), val => {
 
         <!-- 👉 Badge -->
         <Component
-          :is="config.app.enableI18n ? 'i18n-t' : 'span'"
-          v-bind="dynamicI18nProps(item.badgeContent, 'span')"
+          :is="layoutConfig.app.i18n.enable ? 'i18n-t' : 'span'"
+          v-bind="getDynamicI18nProps(item.badgeContent, 'span')"
           v-show="!hideTitleAndBadge"
           v-if="item.badgeContent"
           key="badge"
@@ -143,13 +181,13 @@ watch(isVerticalNavMini(windowWidth, isVerticalNavHovered), val => {
           {{ item.badgeContent }}
         </Component>
         <Component
-          :is="config.app.iconRenderer || 'div'"
+          :is="layoutConfig.app.iconRenderer || 'div'"
           v-show="!hideTitleAndBadge"
-          v-bind="config.icons.chevronRight"
+          v-bind="layoutConfig.icons.chevronRight"
           key="arrow"
           class="nav-group-arrow"
         />
-      </TransitionGroup>
+      </Component>
     </div>
     <TransitionExpand>
       <ul

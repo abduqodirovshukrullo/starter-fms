@@ -33,6 +33,7 @@ export const getScatterChartConfig = themeColors => {
       position: 'top',
       horizontalAlign: 'left',
       markers: { offsetX: -3 },
+      fontSize: '13px',
       labels: { colors: themeSecondaryTextColor },
       itemMargin: {
         vertical: 3,
@@ -48,7 +49,7 @@ export const getScatterChartConfig = themeColors => {
     },
     yaxis: {
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { fontSize: '0.8125rem', colors: themeDisabledTextColor },
       },
     },
     xaxis: {
@@ -60,7 +61,7 @@ export const getScatterChartConfig = themeColors => {
       },
       labels: {
         style: { colors: themeDisabledTextColor },
-        formatter: val => parseFloat(val).toFixed(1),
+        formatter: val => Number.parseFloat(val).toFixed(1),
       },
     },
   }
@@ -99,7 +100,7 @@ export const getLineChartSimpleConfig = themeColors => {
     },
     yaxis: {
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
     xaxis: {
@@ -109,7 +110,7 @@ export const getLineChartSimpleConfig = themeColors => {
         stroke: { color: themeBorderColor },
       },
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
       categories: [
         '7/12',
@@ -160,7 +161,7 @@ export const getBarChartConfig = themeColors => {
     },
     yaxis: {
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
     xaxis: {
@@ -168,7 +169,7 @@ export const getBarChartConfig = themeColors => {
       axisTicks: { color: themeBorderColor },
       categories: ['MON, 11', 'THU, 14', 'FRI, 15', 'MON, 18', 'WED, 20', 'FRI, 21', 'MON, 23'],
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
   }
@@ -208,7 +209,7 @@ export const getCandlestickChartConfig = themeColors => {
         stroke: { color: themeBorderColor },
       },
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
     xaxis: {
@@ -219,7 +220,7 @@ export const getCandlestickChartConfig = themeColors => {
         stroke: { color: themeBorderColor },
       },
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
   }
@@ -240,6 +241,7 @@ export const getRadialBarChartConfig = themeColors => {
     labels: ['Comments', 'Replies', 'Shares'],
     legend: {
       show: true,
+      fontSize: '13px',
       position: 'bottom',
       labels: {
         colors: themeSecondaryTextColor,
@@ -265,7 +267,7 @@ export const getRadialBarChartConfig = themeColors => {
             fontSize: '2rem',
           },
           value: {
-            fontSize: '1rem',
+            fontSize: '0.9375rem',
             color: themeSecondaryTextColor,
           },
           total: {
@@ -290,8 +292,8 @@ export const getRadialBarChartConfig = themeColors => {
     },
     grid: {
       padding: {
-        top: -35,
-        bottom: -30,
+        top: -30,
+        bottom: -25,
       },
     },
   }
@@ -313,11 +315,12 @@ export const getDonutChartConfig = themeColors => {
     colors: [donutColors.series1, donutColors.series5, donutColors.series3, donutColors.series2],
     dataLabels: {
       enabled: true,
-      formatter: val => `${parseInt(val, 10)}%`,
+      formatter: val => `${Number.parseInt(val, 10)}%`,
     },
     legend: {
       position: 'bottom',
       markers: { offsetX: -3 },
+      fontSize: '13px',
       labels: { colors: themeSecondaryTextColor },
       itemMargin: {
         vertical: 3,
@@ -330,16 +333,16 @@ export const getDonutChartConfig = themeColors => {
           labels: {
             show: true,
             name: {
-              fontSize: '1.5rem',
+              fontSize: '1.125rem',
             },
             value: {
-              fontSize: '1.5rem',
+              fontSize: '1.125rem',
               color: themeSecondaryTextColor,
-              formatter: val => `${parseInt(val, 10)}`,
+              formatter: val => `${Number.parseInt(val, 10)}`,
             },
             total: {
               show: true,
-              fontSize: '1.5rem',
+              fontSize: '1.125rem',
               label: 'Operational',
               formatter: () => '31%',
               color: themePrimaryTextColor,
@@ -372,13 +375,13 @@ export const getDonutChartConfig = themeColors => {
                 labels: {
                   show: true,
                   name: {
-                    fontSize: '1rem',
+                    fontSize: '0.9375rem',
                   },
                   value: {
-                    fontSize: '1rem',
+                    fontSize: '0.9375rem',
                   },
                   total: {
-                    fontSize: '1rem',
+                    fontSize: '0.9375rem',
                   },
                 },
               },
@@ -412,6 +415,7 @@ export const getAreaChartSplineConfig = themeColors => {
     legend: {
       position: 'top',
       horizontalAlign: 'left',
+      fontSize: '13px',
       labels: { colors: themeSecondaryTextColor },
       markers: {
         offsetY: 1,
@@ -436,7 +440,7 @@ export const getAreaChartSplineConfig = themeColors => {
     },
     yaxis: {
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
     xaxis: {
@@ -446,7 +450,7 @@ export const getAreaChartSplineConfig = themeColors => {
         stroke: { color: themeBorderColor },
       },
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
       categories: [
         '7/12',
@@ -488,6 +492,7 @@ export const getColumnChartConfig = themeColors => {
     legend: {
       position: 'top',
       horizontalAlign: 'left',
+      fontSize: '13px',
       labels: { colors: themeSecondaryTextColor },
       markers: {
         offsetY: 1,
@@ -519,7 +524,7 @@ export const getColumnChartConfig = themeColors => {
     },
     yaxis: {
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
     xaxis: {
@@ -530,7 +535,7 @@ export const getColumnChartConfig = themeColors => {
         stroke: { color: themeBorderColor },
       },
       labels: {
-        style: { colors: themeDisabledTextColor },
+        style: { colors: themeDisabledTextColor, fontSize: '0.8125rem' },
       },
     },
     responsive: [
@@ -561,6 +566,7 @@ export const getHeatMapChartConfig = themeColors => {
     },
     legend: {
       position: 'bottom',
+      fontSize: '13px',
       labels: {
         colors: themeSecondaryTextColor,
       },
@@ -595,6 +601,7 @@ export const getHeatMapChartConfig = themeColors => {
       labels: {
         style: {
           colors: themeDisabledTextColor,
+          fontSize: '0.8125rem',
         },
       },
     },
@@ -633,6 +640,7 @@ export const getRadarChartConfig = themeColors => {
       show: false,
     },
     legend: {
+      fontSize: '13px',
       labels: {
         colors: themeSecondaryTextColor,
       },
@@ -664,6 +672,7 @@ export const getRadarChartConfig = themeColors => {
       categories: ['Battery', 'Brand', 'Camera', 'Memory', 'Storage', 'Display', 'OS', 'Price'],
       labels: {
         style: {
+          fontSize: '0.8125rem',
           colors: [
             themeDisabledTextColor,
             themeDisabledTextColor,

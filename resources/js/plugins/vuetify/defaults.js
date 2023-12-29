@@ -1,11 +1,27 @@
 export default {
+  IconBtn: {
+    icon: true,
+    color: 'default',
+    variant: 'text',
+    density: 'comfortable',
+    VIcon: {
+      size: 22,
+    },
+  },
   VAlert: {
     density: 'comfortable',
+    VBtn: {
+      color: undefined,
+    },
   },
   VAvatar: {
     // ℹ️ Remove after next release
     variant: 'flat',
   },
+
+  // VImg: {
+  //   eager: true,
+  // },
   VBadge: {
     // set v-badge default color to primary
     color: 'primary',
@@ -17,8 +33,17 @@ export default {
   VChip: {
     size: 'small',
   },
-  VMenu: {
-    VList: {
+  VExpansionPanel: {
+    expandIcon: 'tabler-chevron-right',
+    collapseIcon: 'tabler-chevron-right',
+  },
+  VExpansionPanelTitle: {
+    expandIcon: 'tabler-chevron-right',
+    collapseIcon: 'tabler-chevron-right',
+  },
+  VList: {
+    density: 'comfortable',
+    VCheckboxBtn: {
       density: 'compact',
     },
   },
@@ -39,10 +64,8 @@ export default {
     // set v-tooltip default location to top
     location: 'top',
   },
-  VList: {
-    VListItem: {
-      activeColor: 'primary',
-    },
+  VCheckboxBtn: {
+    color: 'primary',
   },
   VCheckbox: {
     // set v-checkbox default color to primary
@@ -61,14 +84,20 @@ export default {
   },
   VSelect: {
     variant: 'outlined',
-    density: 'compact',
     color: 'primary',
+    density: 'compact',
     hideDetails: 'auto',
+    VChip: {
+      color: 'primary',
+      label: true,
+    },
   },
   VRangeSlider: {
     // set v-range-slider default color to primary
     color: 'primary',
-    thumbSize: 14,
+    trackColor: 'rgb(var(--v-theme-on-surface),0.06)',
+    trackSize: 6,
+    thumbSize: 7,
     density: 'comfortable',
     thumbLabel: true,
     hideDetails: 'auto',
@@ -81,11 +110,19 @@ export default {
     // set v-progress-circular default color to primary
     color: 'primary',
   },
+  VProgressLinear: {
+    height: 12,
+    roundedBar: true,
+    rounded: true,
+    color: 'primary',
+  },
   VSlider: {
     // set v-slider default color to primary
     color: 'primary',
+    trackColor: 'rgb(var(--v-theme-on-surface),0.06)',
     hideDetails: 'auto',
-    thumbSize: 14,
+    thumbSize: 7,
+    trackSize: 6,
   },
   VTextField: {
     variant: 'outlined',
@@ -98,12 +135,23 @@ export default {
     color: 'primary',
     density: 'compact',
     hideDetails: 'auto',
+    menuProps: {
+      contentClass: 'app-autocomplete__content v-autocomplete__content',
+    },
+    VChip: {
+      color: 'primary',
+      label: true,
+    },
   },
   VCombobox: {
     variant: 'outlined',
     density: 'compact',
     color: 'primary',
     hideDetails: 'auto',
+    VChip: {
+      color: 'primary',
+      label: true,
+    },
   },
   VFileInput: {
     variant: 'outlined',
@@ -119,10 +167,19 @@ export default {
   },
   VSwitch: {
     // set v-switch default color to primary
+    inset: true,
     color: 'primary',
     hideDetails: 'auto',
   },
   VTimeline: {
     lineThickness: 1,
+  },
+  VDataTable: {
+    VDataTableFooter: {
+      VBtn: {
+        density: 'comfortable',
+        color: 'default',
+      },
+    },
   },
 }

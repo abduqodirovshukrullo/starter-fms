@@ -5,14 +5,22 @@ const props = defineProps({
     required: false,
     default: 'tabler-x',
   },
+  iconSize: {
+    type: String,
+    required: false,
+    default: '20',
+  },
 })
 </script>
 
 <template>
-  <VBtn
-    icon
+  <IconBtn
+    variant="elevated"
     class="v-dialog-close-btn"
   >
-    <VIcon :icon="props.icon" />
-  </VBtn>
+    <VIcon
+      :icon="props.icon"
+      :size="props.iconSize"
+    />
+  </IconBtn>
 </template>

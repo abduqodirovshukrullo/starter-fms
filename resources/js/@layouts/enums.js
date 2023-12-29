@@ -16,3 +16,8 @@ export const AppContentLayoutNav = {
   Vertical: 'vertical',
   Horizontal: 'horizontal',
 }
+export const HorizontalNavType = {
+  Sticky: 'sticky',
+  Static: 'static',
+  Hidden: 'hidden',
+}

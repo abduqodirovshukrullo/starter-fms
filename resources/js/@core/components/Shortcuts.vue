@@ -17,14 +17,9 @@ const router = useRouter()
 </script>
 
 <template>
-  <VBtn
-    variant="text"
-    color="default"
-    size="small"
-    icon
-  >
+  <IconBtn>
     <VIcon
-      size="24"
+      size="26"
       :icon="props.togglerIcon"
     />
 
@@ -42,17 +37,9 @@ const router = useRouter()
           <VCardTitle>Shortcuts</VCardTitle>
 
           <template #append>
-            <VBtn
-              size="x-small"
-              variant="text"
-              color="default"
-              icon
-            >
-              <VIcon
-                size="22"
-                icon="tabler-layout-grid-add"
-              />
-            </VBtn>
+            <IconBtn>
+              <VIcon icon="tabler-layout-grid-add" />
+            </IconBtn>
           </template>
         </VCardItem>
 
@@ -64,7 +51,7 @@ const router = useRouter()
               v-for="(shortcut, index) in props.shortcuts"
               :key="shortcut.title"
               cols="6"
-              class="text-center border-t cursor-pointer pa-4"
+              class="text-center border-t cursor-pointer pa-4 shortcut-icon"
               :class="(index + 1) % 2 ? 'border-e' : ''"
               @click="router.push(shortcut.to)"
             >
@@ -75,7 +62,7 @@ const router = useRouter()
                 <VIcon :icon="shortcut.icon" />
               </VAvatar>
 
-              <h6 class="text-base font-weight-semibold mt-2 mb-0">
+              <h6 class="text-base font-weight-medium mt-2 mb-0">
                 {{ shortcut.title }}
               </h6>
               <span class="text-sm">{{ shortcut.subtitle }}</span>
@@ -84,5 +71,11 @@ const router = useRouter()
         </PerfectScrollbar>
       </VCard>
     </VMenu>
-  </VBtn>
+  </IconBtn>
 </template>
+
+<style lang="scss">
+.shortcut-icon:hover {
+  background-color: rgba(var(--v-theme-on-surface), var(--v-hover-opacity));
+}
+</style>

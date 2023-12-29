@@ -1,9 +1,9 @@
 <script setup>
-import { useLayouts } from '@layouts'
-import { config } from '@layouts/config'
+import { layoutConfig } from '@layouts'
 import { can } from '@layouts/plugins/casl'
 import {
   getComputedNavLinkToProp,
+  getDynamicI18nProps,
   isNavLinkActive,
 } from '@layouts/utils'
 
@@ -18,8 +18,6 @@ const props = defineProps({
     default: false,
   },
 })
-
-const { dynamicI18nProps } = useLayouts()
 </script>
 
 <template>
@@ -37,14 +35,14 @@ const { dynamicI18nProps } = useLayouts()
       :class="{ 'router-link-active router-link-exact-active': isNavLinkActive(item, $router) }"
     >
       <Component
-        :is="config.app.iconRenderer || 'div'"
+        :is="layoutConfig.app.iconRenderer || 'div'"
         class="nav-item-icon"
-        v-bind="item.icon || config.verticalNav.defaultNavItemIconProps"
+        v-bind="item.icon || layoutConfig.verticalNav.defaultNavItemIconProps"
       />
       <Component
-        :is="config.app.enableI18n ? 'i18n-t' : 'span'"
+        :is="layoutConfig.app.i18n.enable ? 'i18n-t' : 'span'"
         class="nav-item-title"
-        v-bind="dynamicI18nProps(item.title, 'span')"
+        v-bind="getDynamicI18nProps(item.title, 'span')"
       >
         {{ item.title }}
       </Component>

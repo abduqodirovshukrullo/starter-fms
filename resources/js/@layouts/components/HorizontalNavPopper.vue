@@ -4,8 +4,7 @@ import {
   flip,
   shift,
 } from '@floating-ui/dom'
-import { useLayouts } from '@layouts/composable/useLayouts'
-import { config } from '@layouts/config'
+import { useLayoutConfigStore } from '@layouts/stores/config'
 import { themeConfig } from '@themeConfig'
 
 const props = defineProps({
@@ -30,6 +29,7 @@ const props = defineProps({
   },
 })
 
+const configStore = useLayoutConfigStore()
 const refPopperContainer = ref()
 const refPopper = ref()
 
@@ -37,28 +37,69 @@ const popperContentStyles = ref({
   left: '0px',
   top: '0px',
 
-  // strategy: 'fixed',
+  /*ℹ️ Why we are not using fixed positioning?
+
+`position: fixed` doesn't work as expected when some CSS properties like `transform` is applied on its parent element.
+Docs: https://developer.mozilla.org/en-US/docs/Web/CSS/position#values <= See `fixed` value description
+
+Hence, when we use transitions where transition apply `transform` on its parent element, fixed positioning will not work.
+(Popper content moves away from the element when parent element transition)
+
+To avoid this, we use `position: absolute` instead of `position: fixed`.
+
+NOTE: This issue starts from third level children (Top Level > Sub item > Sub item).
+*/
+
+// strategy: 'fixed',
 })
 
 const updatePopper = async () => {
-  const { x, y } = await computePosition(refPopperContainer.value, refPopper.value, {
-    placement: props.popperInlineEnd ? props.isRtl ? 'left-start' : 'right-start' : props.isRtl ? 'bottom-end' : 'bottom-start',
-    middleware: [
-      flip({ boundary: document.querySelector('body') }),
-      shift({ boundary: document.querySelector('body') }),
-    ],
+  if (refPopperContainer.value !== undefined && refPopper.value !== undefined) {
+    const { x, y } = await computePosition(refPopperContainer.value, refPopper.value, {
+      placement: props.popperInlineEnd ? props.isRtl ? 'left-start' : 'right-start' : 'bottom-start',
+      middleware: [
+        flip({ boundary: document.querySelector('body') }),
+        shift({ boundary: document.querySelector('body') }),
+      ],
 
-    // strategy: 'fixed',
-  })
+      /*ℹ️ Why we are not using fixed positioning?
 
-  popperContentStyles.value.left = `${ x }px`
-  popperContentStyles.value.top = `${ y }px`
+`position: fixed` doesn't work as expected when some CSS properties like `transform` is applied on its parent element.
+Docs: https://developer.mozilla.org/en-US/docs/Web/CSS/position#values <= See `fixed` value description
+
+Hence, when we use transitions where transition apply `transform` on its parent element, fixed positioning will not work.
+(Popper content moves away from the element when parent element transition)
+
+To avoid this, we use `position: absolute` instead of `position: fixed`.
+
+NOTE: This issue starts from third level children (Top Level > Sub item > Sub item).
+*/
+
+      // strategy: 'fixed',
+    })
+
+    popperContentStyles.value.left = `${ x }px`
+    popperContentStyles.value.top = `${ y }px`
+  }
 }
 
-until(config.horizontalNav.type).toMatch(type => type === 'static').then(() => {
+until(() => configStore.horizontalNavType).toMatch(type => type === 'static').then(() => {
   useEventListener('scroll', updatePopper)
 
-  // strategy: 'fixed',
+  /*ℹ️ Why we are not using fixed positioning?
+
+`position: fixed` doesn't work as expected when some CSS properties like `transform` is applied on its parent element.
+Docs: https://developer.mozilla.org/en-US/docs/Web/CSS/position#values <= See `fixed` value description
+
+Hence, when we use transitions where transition apply `transform` on its parent element, fixed positioning will not work.
+(Popper content moves away from the element when parent element transition)
+
+To avoid this, we use `position: absolute` instead of `position: fixed`.
+
+NOTE: This issue starts from third level children (Top Level > Sub item > Sub item).
+*/
+
+// strategy: 'fixed',
 })
 
 const isContentShown = ref(false)
@@ -74,11 +115,10 @@ const hideContent = () => {
 
 onMounted(updatePopper)
 
-const { isAppRtl, appContentWidth } = useLayouts()
-
+// ℹ️ Recalculate popper position when it's triggerer changes its position
 watch([
-  isAppRtl,
-  appContentWidth,
+  () => configStore.isAppRTL,
+  () => configStore.appContentWidth,
 ], updatePopper)
 
 // Watch for route changes and close popper content if route is changed

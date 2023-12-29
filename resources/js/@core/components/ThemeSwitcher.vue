@@ -1,5 +1,5 @@
 <script setup>
-import { useThemeConfig } from '@core/composable/useThemeConfig'
+import { useConfigStore } from '@core/stores/config'
 
 const props = defineProps({
   themes: {
@@ -8,40 +8,47 @@ const props = defineProps({
   },
 })
 
-const { theme } = useThemeConfig()
+const configStore = useConfigStore()
+const selectedItem = ref([configStore.theme])
 
-const {
-  state: currentTheme,
-  next: getNextThemeName,
-  index: currentThemeIndex,
-} = useCycleList(props.themes.map(t => t.name), { initialValue: theme.value })
-
-const changeTheme = () => {
-  theme.value = getNextThemeName()
-}
-
-const getThemeIcon = computedWithControl(theme, () => {
-  const nextThemeIndex = currentThemeIndex.value + 1 === props.themes.length ? 0 : currentThemeIndex.value + 1
-  
-  return props.themes[nextThemeIndex].icon
-})
-
-watch(theme, val => {
-  currentTheme.value = val
-})
+// Update icon if theme is changed from other sources
+watch(() => configStore.theme, () => {
+  selectedItem.value = [configStore.theme]
+}, { deep: true })
 </script>
 
 <template>
-  <VBtn
-    icon
-    variant="text"
-    color="default"
-    size="small"
-    @click="changeTheme"
-  >
+  <IconBtn color="rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity))">
     <VIcon
-      :icon="getThemeIcon"
-      size="24"
+      :icon="props.themes.find(t => t.name === configStore.theme)?.icon"
+      size="26"
     />
-  </VBtn>
+
+    <VTooltip
+      activator="parent"
+      open-delay="1000"
+      scroll-strategy="close"
+    >
+      <span class="text-capitalize">{{ configStore.theme }}</span>
+    </VTooltip>
+
+    <VMenu
+      activator="parent"
+      offset="14px"
+    >
+      <VList v-model:selected="selectedItem">
+        <VListItem
+          v-for="{ name, icon } in props.themes"
+          :key="name"
+          :value="name"
+          :prepend-icon="icon"
+          color="primary"
+          class="text-capitalize"
+          @click="() => { configStore.theme = name }"
+        >
+          {{ name }}
+        </VListItem>
+      </VList>
+    </VMenu>
+  </IconBtn>
 </template>

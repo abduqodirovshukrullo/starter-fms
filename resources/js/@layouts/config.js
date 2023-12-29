@@ -1,29 +1,34 @@
 import { breakpointsVuetify } from '@vueuse/core'
-import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
+import { AppContentLayoutNav, ContentWidth, FooterType, HorizontalNavType, NavbarType } from '@layouts/enums'
 
-export const config = {
+export const layoutConfig = {
   app: {
-    title: 'Title',
+    title: 'my-layout',
     logo: h('img', { src: '/src/assets/logo.svg' }),
-
-    // logo: () => h('img', { src: 'assets/colored-logo.png' }, null),
-    contentWidth: ref(ContentWidth.Boxed),
-    contentLayoutNav: ref(AppContentLayoutNav.Vertical),
+    contentWidth: ContentWidth.Boxed,
+    contentLayoutNav: AppContentLayoutNav.Vertical,
     overlayNavFromBreakpoint: breakpointsVuetify.md,
-    enableI18n: true,
-    isRtl: ref(false),
+
+    // isRTL: false,
+    i18n: {
+      enable: true,
+    },
+    iconRenderer: h('div'),
   },
   navbar: {
-    type: ref(NavbarType.Sticky),
-    navbarBlur: ref(true),
+    type: NavbarType.Sticky,
+    navbarBlur: true,
   },
-  footer: { type: ref(FooterType.Static) },
+  footer: {
+    type: FooterType.Static,
+  },
   verticalNav: {
-    isVerticalNavCollapsed: ref(false),
+    isVerticalNavCollapsed: false,
     defaultNavItemIconProps: { icon: 'tabler-circle' },
   },
   horizontalNav: {
-    type: ref('sticky'),
+    type: HorizontalNavType.Sticky,
+    transition: 'none',
   },
   icons: {
     chevronDown: { icon: 'tabler-chevron-down' },
