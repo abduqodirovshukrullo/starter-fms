@@ -17,15 +17,38 @@ definePage({
   },
 })
 
+const route = useRoute()
+const router = useRouter()
+const ability = useAbility()
+
 const form = ref({
-  email: '',
+  name: '',
   password: '',
   remember: false,
 })
 
+
 const isPasswordVisible = ref(false)
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
+
+const onSubmit = async ()=>{
+  const { data, pending, error, refresh }  = await useApi(createUrl("/sign-in/process")).post(form.value)
+
+  if(!pending){
+
+    useCookie('accessToken').value = data.value.result.token,
+    useCookie('userAbilityRules').value = data.value.result.abilities
+    useCookie('userData').value = data.value.result.user
+    ability.update(data.value.result.abilities)
+  }
+  await nextTick(() => {
+    router.replace(route.query.to ? String(route.query.to) : '/')
+  })
+
+}
+
+
 </script>
 
 <template>
@@ -76,16 +99,15 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
           </p>
         </VCardText>
         <VCardText>
-          <VForm @submit.prevent="() => { }">
+          <VForm @submit.prevent="onSubmit">
             <VRow>
-              <!-- email -->
+              <!-- name -->
               <VCol cols="12">
                 <AppTextField
-                  v-model="form.email"
+                  v-model="form.name"
                   autofocus
-                  label="Email"
-                  type="email"
-                  placeholder="johndoe@email.com"
+                  label="Username"
+                  placeholder="johndoe"
                 />
               </VCol>
 
@@ -114,6 +136,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
                 </div>
 
                 <VBtn
+
                   block
                   type="submit"
                 >

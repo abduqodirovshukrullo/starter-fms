@@ -354,6 +354,7 @@
     "useResponsiveLeftSidebar": true,
     "useSkins": true,
     "watchDeep": true,
-    "watchImmediate": true
+    "watchImmediate": true,
+    "useAbility": true
   }
 }

@@ -32,6 +32,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'roles',
+        'permissions',
         'password',
         'remember_token',
     ];
@@ -44,4 +46,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function abilities(){
+       $permissions = $this->getAllPermissions();
+       $abilities = [];
+       foreach($permissions as $item){
+        $exploded = explode(':',$item['name']);
+        $abilities[] = [
+            'subject' => $exploded[1],
+            'action' => $exploded[0]
+        ];
+       }
+       return $abilities;
+    }
 }

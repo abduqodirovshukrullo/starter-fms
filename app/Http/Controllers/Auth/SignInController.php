@@ -34,7 +34,8 @@ class SignInController extends Controller
                 'message' => 'Successessfully logged in!',
                 "result"=>[
                     "token"=>$tokenResult->accessToken,
-                    "user"=>$user
+                    "user"=>$user,
+                    "abilities"=>$user->abilities()
                 ]
             ],
             200

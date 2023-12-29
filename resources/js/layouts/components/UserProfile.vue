@@ -1,5 +1,31 @@
 <script setup>
 import avatar1 from '@images/avatars/avatar-1.png'
+
+const router = useRouter()
+const ability = useAbility()
+
+// TODO: Get type from backend
+const userData = useCookie('userData')
+
+const logout = async () => {
+
+  // Remove "accessToken" from cookie
+  useCookie('accessToken').value = null
+
+  // Remove "userData" from cookie
+  userData.value = null
+
+  // Redirect to login page
+  await router.push('/login')
+
+  // ℹ️ We had to remove abilities in then block because if we don't nav menu items mutation is visible while redirecting user to login page
+
+  // Remove "userAbilities" from cookie
+  useCookie('userAbilityRules').value = null
+
+  // Reset ability to initial ability
+  ability.update([])
+}
 </script>
 
 <template>
@@ -111,7 +137,7 @@ import avatar1 from '@images/avatars/avatar-1.png'
           <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
-          <VListItem to="/login">
+          <VListItem  @click="logout">
             <template #prepend>
               <VIcon
                 class="me-2"

@@ -26,8 +26,8 @@
 <script setup>
 definePage({
   meta: {
-    action: 'read',
-    subject: 'AclDemo',
+    action: 'manage',
+    subject: 'permisson',
   },
 })
 </script>
