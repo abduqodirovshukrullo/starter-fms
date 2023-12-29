@@ -20,6 +20,7 @@ definePage({
 const route = useRoute()
 const router = useRouter()
 const ability = useAbility()
+const isErrorSnackbarVisible = ref(false)
 
 const form = ref({
   name: '',
@@ -27,6 +28,7 @@ const form = ref({
   remember: false,
 })
 
+const errorMessage = ref('')
 
 const isPasswordVisible = ref(false)
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
@@ -36,15 +38,20 @@ const onSubmit = async ()=>{
   const { data, pending, error, refresh }  = await useApi(createUrl("/sign-in/process")).post(form.value)
 
   if(!pending){
-
+    if(error.value){
+      errorMessage.value = "Wrong credentials!"
+      isErrorSnackbarVisible.value = true
+      return
+    }
     useCookie('accessToken').value = data.value.result.token,
     useCookie('userAbilityRules').value = data.value.result.abilities
     useCookie('userData').value = data.value.result.user
     ability.update(data.value.result.abilities)
+    await nextTick(() => {
+      router.replace(route.query.to ? String(route.query.to) : '/')
+    })
   }
-  await nextTick(() => {
-    router.replace(route.query.to ? String(route.query.to) : '/')
-  })
+
 
 }
 
@@ -148,6 +155,14 @@ const onSubmit = async ()=>{
           </VForm>
         </VCardText>
       </VCard>
+      <VSnackbar
+        v-model="isErrorSnackbarVisible"
+        location="top right"
+        variant="flat"
+        color="error"
+      >
+        {{ errorMessage }}
+      </VSnackbar>
     </VCol>
   </VRow>
 </template>

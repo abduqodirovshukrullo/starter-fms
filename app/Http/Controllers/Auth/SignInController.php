@@ -17,7 +17,7 @@ class SignInController extends Controller
         $credentials = $request->validated();
         
         if(!Auth::guard('web')->attempt($credentials)){
-            return $this->respondUnAuthorized();
+            return $this->respondError('Credentials is not correct!',401);
         }
         $user = User::where(['name'=>$credentials['name']])->first();
 
