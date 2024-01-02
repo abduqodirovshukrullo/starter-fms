@@ -10,6 +10,8 @@ class Client extends BaseClient implements AuthorizableContract
 {
     use HasRoles;
     use Authorizable;
+
+    protected $tableName = 'users';
     
     public function guardName()
     {
