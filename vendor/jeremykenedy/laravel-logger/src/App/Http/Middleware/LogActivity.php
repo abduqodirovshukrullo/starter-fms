@@ -20,11 +20,18 @@ class LogActivity
      */
     public function handle($request, Closure $next, $description = null)
     {
+
+        $response = $next($request);
+        $details = [
+            'raw'=>$response->getContent()
+        ];
         if (config('LaravelLogger.loggerMiddlewareEnabled') && $this->shouldLog($request)) {
-            $this->activity($description);
+            $this->activity($description,json_encode($details));
         }
 
-        return $next($request);
+        
+
+        return $response;
     }
 
     /**

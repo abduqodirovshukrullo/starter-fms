@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-
+        
         if ($request->expectsJson()) {
             if ($exception instanceof PostTooLargeException) {
                 return $this->apiResponse(

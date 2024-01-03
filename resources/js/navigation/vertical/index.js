@@ -1,16 +1,16 @@
 export default [
   {
-    title: 'Home',
+    title: 'Main',
     to: { name: 'root' },
     icon: { icon: 'tabler-smart-home' },
     action: 'manage',
-    subject: 'permisson',
+    subject: 'permission',
   },
   {
-    title: 'Second page',
-    to: { name: 'second-page' },
-    icon: { icon: 'tabler-file' },
+    title: 'Users',
+    to: { name: 'users-list' },
+    icon: { icon: 'tabler-users-group' },
     action: 'manage',
-    subject: 'permisson',
+    subject: 'permission',
   },
 ]
