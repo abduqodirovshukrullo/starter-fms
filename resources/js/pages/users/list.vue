@@ -1,6 +1,6 @@
 <script setup>
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
-
+import AddNewUserDrawer from '@/views/pages/users/AddNewUserDrawer.vue';
 import { paginationMeta } from '@api-utils/paginationMeta';
 definePage({
   meta: {
@@ -8,6 +8,20 @@ definePage({
     subject: 'permission',
   },
 });
+
+
+
+const isAddNewUserDrawerVisible = ref(false)
+
+const addNewUser = async userData => {
+  await $api('/dashboard/admin/user', {
+    method: 'POST',
+    body: userData,
+  })
+
+  // refetch User
+  fetchUsers()
+}
 
 const headers = [
   {
@@ -70,7 +84,36 @@ const users = computed(() => usersData.value.result.data)
 const totalUsers = computed(() => usersData.value.result.total)
 </script>
 <template>
-    <VCard title="Create Awesome 🙌">
+  <section>
+    <VCard>
+      <VCardText class="d-flex flex-wrap py-4 gap-4">
+        <div class="me-3 d-flex gap-3">
+          <AppSelect
+            :model-value="itemsPerPage"
+            :items="[
+              { value: 10, title: '10' },
+              { value: 25, title: '25' },
+              { value: 50, title: '50' },
+              { value: 100, title: '100' },
+              { value: -1, title: 'All' },
+            ]"
+            style="inline-size: 6.25rem;"
+            @update:model-value="itemsPerPage = parseInt($event, 10)"
+          />
+        </div>
+        <VSpacer />
+
+        <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
+          <!-- 👉 Add user button -->
+          <VBtn
+            prepend-icon="tabler-plus"
+            @click="isAddNewUserDrawerVisible = true"
+          >
+            Add New User
+          </VBtn>
+        </div>
+      </VCardText>
+      <VDivider/>
       <VDataTableServer
         v-model:items-per-page="itemsPerPage"
         v-model:page="page"
@@ -158,7 +201,11 @@ const totalUsers = computed(() => usersData.value.result.total)
           </div>
         </template>
       </VDataTableServer>
-
-
     </VCard>
+        <!-- 👉 Add New User -->
+    <AddNewUserDrawer
+      v-model:isDrawerOpen="isAddNewUserDrawerVisible"
+      @user-data="addNewUser"
+    />
+  </section>
 </template>

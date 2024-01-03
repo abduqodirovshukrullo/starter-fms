@@ -24,7 +24,7 @@ const router = createRouter({
     return { top: 0 }
   },
   extendRoutes: pages => [
-    // ...redirects,
+    ...redirects,
     ...[
       ...pages,
       ...routes,

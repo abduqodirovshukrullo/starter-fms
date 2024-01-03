@@ -39,13 +39,17 @@ import type {
 
 declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
-    'root': RouteRecordInfo<'root', '/', Record<never, never>, Record<never, never>>,
     '$error': RouteRecordInfo<'$error', '/:error(.*)', { error: ParamValue<true> }, { error: ParamValue<false> }>,
+    'dashboards-admin': RouteRecordInfo<'dashboards-admin', '/dashboards/admin', Record<never, never>, Record<never, never>>,
+    'dashboards-supervisor': RouteRecordInfo<'dashboards-supervisor', '/dashboards/supervisor', Record<never, never>, Record<never, never>>,
     'login': RouteRecordInfo<'login', '/login', Record<never, never>, Record<never, never>>,
     'not-authorized': RouteRecordInfo<'not-authorized', '/not-authorized', Record<never, never>, Record<never, never>>,
+    'robots-main': RouteRecordInfo<'robots-main', '/robots/main', Record<never, never>, Record<never, never>>,
     'second-page': RouteRecordInfo<'second-page', '/second-page', Record<never, never>, Record<never, never>>,
     'users-id': RouteRecordInfo<'users-id', '/users/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     'users-list': RouteRecordInfo<'users-list', '/users/list', Record<never, never>, Record<never, never>>,
+    'users-profile': RouteRecordInfo<'users-profile', '/users/profile', Record<never, never>, Record<never, never>>,
+    'vehicles-main': RouteRecordInfo<'vehicles-main', '/vehicles/main', Record<never, never>, Record<never, never>>,
   }
 }
 
