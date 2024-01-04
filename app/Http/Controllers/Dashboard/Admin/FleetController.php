@@ -11,13 +11,22 @@ use Illuminate\Http\Request;
 class FleetController extends Controller
 {
 
-    public function list(){
-        $fleets = Fleet::query()->paginate(10);
+    public function list(Request $request){
+        
+        $fleets = Fleet::query();
+
+        if($request->type){
+            $fleets = $fleets->where('type',$request->type);
+        }
+
+        $fleets = $fleets->paginate(10);
+
         return $this->apiResponse([
             'success'=>true,
             'message'=>'Users successfully fetched!',
             'result'=>$fleets
         ]);
+
     }
 
     public function create(CreateFleetRequest $request){

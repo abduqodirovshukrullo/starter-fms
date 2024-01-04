@@ -34,7 +34,7 @@ const onSubmit = () => {
         id: 0,
         name: name.value, 
         number: number.value,
-        type:'robot'
+        type:'vehicle'
       })
       emit('update:isDrawerOpen', false)
       nextTick(() => {
@@ -61,7 +61,7 @@ const handleDrawerModelValueUpdate = val => {
   >
     <!-- 👉 Title -->
     <AppDrawerHeaderSection
-      title="Add Robot"
+      title="Add Vehicle"
       @cancel="closeNavigationDrawer"
     />
 

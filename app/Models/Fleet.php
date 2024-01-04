@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Fleet extends Model
 {
+	const robot = 'robot';
+	const vehicle = 'vehicle';
 	protected $table = 'fleets';
 	protected $perPage = 10;
 	protected $casts = [

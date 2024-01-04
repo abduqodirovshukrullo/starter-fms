@@ -47,6 +47,7 @@ const {
 } = await useApi(createUrl('/dashboard/admin/fleet', {
   query: {
     q: searchQuery,
+    type:'robot',
     status: selectedStatus,
     plan: selectedPlan,
     role: selectedRole,
