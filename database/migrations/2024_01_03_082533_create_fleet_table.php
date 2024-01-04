@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type',['vehicle','robot']);
             $table->integer('status');
             $table->timestamps();
+            $table->userstamps();
         });
     }
 

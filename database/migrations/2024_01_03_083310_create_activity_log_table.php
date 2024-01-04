@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('status');
             $table->text('description');
             $table->timestamps();
+            $table->userstamps();
         });
     }
 

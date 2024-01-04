@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('fleet')->name('fleet.')->group(__DIR__.'/fleet.php');
 Route::prefix('user')->name('user.')->group(__DIR__.'/user.php');
 // Route::prefix('lib-category')->name('lib-category.')->group(__DIR__.'/lib-category.php');
 // Route::prefix('lib-category-item')->name('lib-category-item.')->group(__DIR__.'/lib-category-item.php');

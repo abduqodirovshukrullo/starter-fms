@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('sensor_attribute_id')->constrained();
             $table->float('value');
             $table->timestamps();
+            $table->userstamps();
         });
     }
 

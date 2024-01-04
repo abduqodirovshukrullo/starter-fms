@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('long');
             $table->foreignId('fleet_activity_id')->constrained();
             $table->timestamps();
+            $table->userstamps();
         });
     }
 

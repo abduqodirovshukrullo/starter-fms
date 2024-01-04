@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained();
             $table->string('unit_measure');
             $table->timestamps();
+            $table->userstamps();
         });
     }
 
