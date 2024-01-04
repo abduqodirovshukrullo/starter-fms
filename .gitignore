@@ -4,7 +4,7 @@
 /public/storage
 /storage/*.key
 /vendor/*
-# !/vendor/jeremykenedy/
+!/vendor/jeremykenedy/
 .env
 .env.backup
 .env.production

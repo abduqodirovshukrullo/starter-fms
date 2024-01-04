@@ -1,5 +1,8 @@
 <script setup>
+
+  import { VDataTableServer } from 'vuetify/labs/VDataTable'
   import AddNewRobotDrawer from '@/views/pages/robots/AddNewRobotDrawer.vue';
+  import { paginationMeta } from '@api-utils/paginationMeta';
   definePage({
     meta: {
       action: 'monitor',
@@ -9,20 +12,70 @@
 
   const isAddNewRobotDrawerVisible = ref(false)
 
-  const headers = [
-    {
-      title: 'User',
-      key: 'name'
-    },
-    {
-      title: 'Email',
-      key: 'email'
-    },
-    {
-      title: 'Created at',
-      key: 'created_at'
-    }
-  ]
+  
+  const addNewRobot = async userRobot => {
+    await $api('/dashboard/admin/fleet', {
+        method: 'POST',
+        body: userRobot,
+    })
+
+    // refetch User
+    fetchRobots()
+  }
+
+// 👉 Store
+const searchQuery = ref('')
+const selectedRole = ref()
+const selectedPlan = ref()
+const selectedStatus = ref()
+
+// Data table options
+const itemsPerPage = ref(10)
+const page = ref(1)
+const sortBy = ref()
+const orderBy = ref()
+
+const updateOptions = options => {
+  page.value = options.page
+  sortBy.value = options.sortBy[0]?.key
+  orderBy.value = options.sortBy[0]?.order
+}
+
+const {
+  data: robotsData,
+  execute: fetchRobots,
+} = await useApi(createUrl('/dashboard/admin/fleet', {
+  query: {
+    q: searchQuery,
+    status: selectedStatus,
+    plan: selectedPlan,
+    role: selectedRole,
+    itemsPerPage,
+    page,
+    sortBy,
+    orderBy,
+  },
+}))
+
+
+
+const robots = computed(() => robotsData.value.result.data)
+const totalRobots = computed(() => robotsData.value.result.total)
+
+const headers = [
+  {
+    title: 'Name',
+    key: 'name'
+  },
+  {
+    title: 'Number',
+    key: 'number'
+  },
+  {
+    title: 'Status',
+    key: 'status'
+  }
+]
 </script>
 <template>
   <section>
@@ -54,10 +107,69 @@
         </div>
       </VCardText>
       <VDivider/>
+      <VDataTableServer
+        v-model:items-per-page="itemsPerPage"
+        v-model:page="page"
+        :items="robots"
+        :items-length="totalRobots"
+        :headers="headers"
+        class="text-no-wrap"
+        @update:options="updateOptions"
+      >
+        <template #item.name="{ item }">
+         {{ item.name}}
+        </template>
+        <template #item.status="{ item }">
+          <VChip
+            color="success"
+            size="small"
+            label
+          >
+            {{ item.status }}
+          </VChip>
+        </template>
+        <template #bottom>
+          <VDivider />
+          <div class="d-flex align-center justify-sm-space-between justify-center flex-wrap gap-3 pa-5 pt-3">
+            <p class="text-sm text-disabled mb-0">
+              {{ paginationMeta({ page, itemsPerPage }, totalRobots) }}
+            </p>
+
+            <VPagination
+              v-model="page"
+              :length="Math.ceil(totalRobots / itemsPerPage)"
+              :total-visible="$vuetify.display.xs ? 1 : Math.ceil(totalRobots / itemsPerPage)"
+            >
+              <template #prev="slotProps">
+                <VBtn
+                  variant="tonal"
+                  color="default"
+                  v-bind="slotProps"
+                  :icon="false"
+                >
+                  Previous
+                </VBtn>
+              </template>
+
+              <template #next="slotProps">
+                <VBtn
+                  variant="tonal"
+                  color="default"
+                  v-bind="slotProps"
+                  :icon="false"
+                >
+                  Next
+                </VBtn>
+              </template>
+            </VPagination>
+          </div>
+        </template>
+      </VDataTableServer>
     </VCard>
 
     <AddNewRobotDrawer
       v-model:isDrawerOpen="isAddNewRobotDrawerVisible"
+      @robot-data="addNewRobot"
     />
   </section>
 </template>

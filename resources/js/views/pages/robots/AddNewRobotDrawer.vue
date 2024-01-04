@@ -10,6 +10,7 @@ const props = defineProps({
 
 const emit = defineEmits([
   'update:isDrawerOpen',
+  'robotData'
 ])
 
 const isFormValid = ref(false)
@@ -29,10 +30,10 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      emit('userData', {
+      emit('robotData', {
         id: 0,
         name: name.value, 
-        number: email.value,
+        number: number.value,
       })
       emit('update:isDrawerOpen', false)
       nextTick(() => {
