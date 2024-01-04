@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('fleet_details', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

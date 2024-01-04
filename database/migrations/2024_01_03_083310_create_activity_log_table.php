@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('activity_log', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('fleet_activity_id')->constrained();
+            $table->integer('status');
+            $table->text('description');
             $table->timestamps();
         });
     }

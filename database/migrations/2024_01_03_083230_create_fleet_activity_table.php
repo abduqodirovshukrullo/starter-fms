@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fleet_activity', function (Blueprint $table) {
+        Schema::create('fleet_activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('fleet_id')->constrained();
+            $table->foreignId('activity_id')->constrained();
             $table->timestamps();
         });
     }

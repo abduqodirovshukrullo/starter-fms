@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('fleet_sensors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('fleet_id')->constrained();
+            $table->foreignId('sensor_attribute_id')->constrained();
+            $table->float('value');
             $table->timestamps();
         });
     }

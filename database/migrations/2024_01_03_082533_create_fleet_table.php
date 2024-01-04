@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('fleets', function (Blueprint $table) {
             $table->id();
+            $table->integer('number')->index();
+            $table->enum('type',['vehicle','robot']);
+            $table->integer('status');
             $table->timestamps();
         });
     }

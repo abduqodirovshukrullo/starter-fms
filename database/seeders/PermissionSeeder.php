@@ -21,9 +21,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'manage:user']);
         Permission::create(['name' => 'read:logs']);
         Permission::create(['name' => 'manage:logs']);
-        Permission::create(['name' => 'attach:permisson']);
-        Permission::create(['name' => 'detach:permisson']);
-        Permission::create(['name' => 'manage:permisson']);
+        Permission::create(['name' => 'attach:permission']);
+        Permission::create(['name' => 'detach:permission']);
+        Permission::create(['name' => 'manage:permission']);
 
         // SuperVisor
         

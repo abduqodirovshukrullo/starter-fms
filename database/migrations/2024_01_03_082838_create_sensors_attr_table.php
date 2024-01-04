@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sensors_attr', function (Blueprint $table) {
+        Schema::create('sensor_attributes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignId('sensor_id')->constrained();
+            $table->string('unit_measure');
             $table->timestamps();
         });
     }

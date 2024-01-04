@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('fleet_services', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('service_attributes_id')->constrained();
+            $table->foreignId('fleet_id')->constrained();
+            $table->float('value');
             $table->timestamps();
         });
     }

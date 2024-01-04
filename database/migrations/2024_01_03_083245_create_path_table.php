@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('path', function (Blueprint $table) {
             $table->id();
+            $table->double('lat');
+            $table->double('long');
+            $table->foreignId('fleet_activity_id')->constrained();
             $table->timestamps();
         });
     }
