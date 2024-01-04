@@ -21,9 +21,9 @@ class RolesSeeder extends Seeder
             'manage:user',
             'read:logs',
             'manage:logs',
-            'attach:permisson',
-            'detach:permisson',
-            'manage:permisson',
+            'attach:permission',
+            'detach:permission',
+            'manage:permission',
         ];
 
         $supervisorPermission = [
