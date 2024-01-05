@@ -42,18 +42,15 @@ const updateOptions = options => {
 const infos = [
   {
     id:1,
-    name: "Battery",
-    value: 30
+    name: "Doors",
   },
   {
     id:2,
-    name: "Speed",
-    value: 30
+    name: "Products",
   },
   {
     id:3,
-    name: "Lidar",
-    value: 30
+    name: "Lights",
   }
 ] 
 
