@@ -38,7 +38,6 @@ const { data: userData } = await useApi(`/dashboard/admin/user/${ route.params.i
       md="7"
       lg="8"
     >
-
       <VTabs
         v-model="userTab"
         class="v-tabs-pill"
