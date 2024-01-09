@@ -16,9 +16,11 @@ class KafkaController extends Controller
             body: ['key' => 'value'],
             key: 'kafka key here'  
         );
-        
-        $data = Kafka::publishOn('first_test')->withMessage($message);
-        Log::info(json_encode($data));
+        $producer = Kafka::publishOn('first_test')
+            ->withConfigOptions(['key' => 'value'])
+            ->withHeaders(['header-key' => 'header-value'])
+            ->withMessage($message);
+        $producer->send();
         return $this->respondSuccess('Success');
     }
 }
