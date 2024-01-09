@@ -13,5 +13,5 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('dashboard')->middleware(['activity'])->name('dashboard.')->group(__DIR__.'/dashboard/index.php');
+Route::prefix('dashboard')->middleware(['activity','auth:api'])->name('dashboard.')->group(__DIR__.'/dashboard/index.php');
 Route::prefix('sign-in')->name('sign-in.')->group(__DIR__.'/auth/index.php');

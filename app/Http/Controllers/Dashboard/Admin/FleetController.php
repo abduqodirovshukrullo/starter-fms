@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Events\RobotDataReceived;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Admin\CreateFleetRequest;
 use App\Models\Fleet;
 use App\Models\FleetDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FleetController extends Controller
 {
 
     public function list(Request $request){
-        
         $fleets = Fleet::query();
-
+        event(new RobotDataReceived());
         if($request->type){
             $fleets = $fleets->where('type',$request->type);
         }
@@ -23,7 +24,7 @@ class FleetController extends Controller
 
         return $this->apiResponse([
             'success'=>true,
-            'message'=>'Users successfully fetched!',
+            'message'=>'Fleets successfully fetched!',
             'result'=>$fleets
         ]);
 
@@ -43,4 +44,6 @@ class FleetController extends Controller
 
         return $this->respondCreated(['success'=>true,'message'=>'Successfully created!']);
     }
+
+    
 }

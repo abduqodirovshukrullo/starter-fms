@@ -5,6 +5,17 @@ import { registerPlugins } from '@core/utils/plugins'
 // Styles
 import '@core-scss/template/index.scss'
 import '@styles/styles.scss'
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+ 
+window.Pusher = Pusher;
+ 
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
 
 // Create vue app
 const app = createApp(App)

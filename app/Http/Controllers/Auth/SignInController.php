@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\RobotDataReceived;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignInProcessRequest;
 use App\Models\User;

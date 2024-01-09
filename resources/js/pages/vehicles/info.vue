@@ -20,6 +20,7 @@ const tabs = [
 
 const infoTab = ref(null)
 
+
 </script>
 
 <template>

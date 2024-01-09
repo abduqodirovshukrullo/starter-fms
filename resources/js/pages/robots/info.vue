@@ -4,6 +4,7 @@ import ActionsTab from '@/views/pages/robots/ActionsTab.vue'
 import SensorInfoTab from '@/views/pages/robots/SensorInfoTab.vue';
 import LocationsInfoTab from '@/views/pages/robots/LocationsInfoTab.vue';
 import { useRoute } from 'vue-router';
+import Echo from 'laravel-echo-vue3';
 const route = useRoute()
 
 definePage({
@@ -35,9 +36,16 @@ const tabs = [
 
 const infoTab = ref(2)
 
-const log = ()=>{
-  console.log('1')
+const getRobotData = async ()=>{
+  
 }
+
+onMounted((e)=>{
+  window.Echo.channel('robotdata')
+    .listen('.data.received', (e) => {
+    console.log(e)
+  })
+})
 </script>
 
 <template>
@@ -73,7 +81,7 @@ const log = ()=>{
           <VWindowItem>
             <SensorInfoTab/>
           </VWindowItem>
-          <VWindowItem @group:selected=log()>
+          <VWindowItem>
             <ActionsTab/>
           </VWindowItem>
           <VWindowItem>

@@ -2,6 +2,8 @@
 import { useTheme } from 'vuetify'
 import ScrollToTop from '@core/components/ScrollToTop.vue'
 import initCore from '@core/initCore'
+import Echo from 'laravel-echo'
+
 import {
   initConfigStore,
   useConfigStore,
@@ -15,6 +17,7 @@ initCore()
 initConfigStore()
 
 const configStore = useConfigStore()
+
 </script>
 
 <template>
