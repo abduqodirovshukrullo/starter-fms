@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Kafka\KafkaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 Route::prefix('dashboard')->middleware(['activity','auth:api'])->name('dashboard.')->group(__DIR__.'/dashboard/index.php');
 Route::prefix('sign-in')->name('sign-in.')->group(__DIR__.'/auth/index.php');
+Route::post('/kafka/produce',[KafkaController::class,'produce'])->name('produce');
