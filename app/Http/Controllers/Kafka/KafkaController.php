@@ -17,7 +17,6 @@ class KafkaController extends Controller
             key: 'kafka key here'  
         );
         $producer = Kafka::publishOn('first_test')
-            ->withConfigOptions(['key' => 'value'])
             ->withHeaders(['header-key' => 'header-value'])
             ->withMessage($message);
         $producer->send();
