@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Junges\Kafka\Facades\Kafka;
 use Junges\Kafka\Contracts\KafkaConsumerMessage;
 
@@ -30,10 +31,10 @@ class KafkaConsumer extends Command
     public function handle()
     {
         $consumer = Kafka::createConsumer(['first_test'])
-        ->withBrokers('localhost:8092')
+        ->withBrokers('localhost:9092')
         ->withAutoCommit()
         ->withHandler(function(KafkaConsumerMessage $message) {
-            // Handle your message here
+            Log::info(json_encode($message));
         })
         ->build();
         
