@@ -64,10 +64,10 @@ const totalUsers = computed(() => 30)
     <section>
       <VRow>
         <VCol
-          cols="4"
+          cols="12"
           sm="12"
-          lg="4"
-          md="4"
+          lg="12"
+          md="12"
         >
           <VCard title="Real time data">
             <VDataTableServer
@@ -85,7 +85,7 @@ const totalUsers = computed(() => 30)
             </VDataTableServer>
           </VCard>
         </VCol>
-        <VCol
+        <!-- <VCol
           cols="8"
           sm="12"
           lg="8"
@@ -140,7 +140,7 @@ const totalUsers = computed(() => 30)
             </VDataTableServer>
           </VCard>
 
-        </VCol>  
+        </VCol>   -->
       </VRow>
     </section>
     

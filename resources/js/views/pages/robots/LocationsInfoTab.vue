@@ -18,9 +18,9 @@ definePage({ meta: { layoutWrapperClasses: 'layout-content-height-fixed' } })
 
 const carImgs = ref([
   fleetImg,
-  fleetImg,
-  fleetImg,
-  fleetImg,
+  // fleetImg,
+  // fleetImg,
+  // fleetImg,
 ])
 
 const refCars = ref([])
@@ -45,36 +45,36 @@ const geojson = {
         ],
       },
     },
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          -74.03,
-          40.75699842,
-        ],
-      },
-    },
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          -73.967524,
-          40.7599842,
-        ],
-      },
-    },
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          -74.0325,
-          40.742992,
-        ],
-      },
-    },
+    // {
+    //   type: 'Feature',
+    //   geometry: {
+    //     type: 'Point',
+    //     coordinates: [
+    //       -74.03,
+    //       40.75699842,
+    //     ],
+    //   },
+    // },
+    // {
+    //   type: 'Feature',
+    //   geometry: {
+    //     type: 'Point',
+    //     coordinates: [
+    //       -73.967524,
+    //       40.7599842,
+    //     ],
+    //   },
+    // },
+    // {
+    //   type: 'Feature',
+    //   geometry: {
+    //     type: 'Point',
+    //     coordinates: [
+    //       -74.0325,
+    //       40.742992,
+    //     ],
+    //   },
+    // },
   ],
 }
 
@@ -103,24 +103,24 @@ const vehicleTrackingData = [
     progress: 88,
     driverName: 'Veronica Herman',
   },
-  {
-    name: 'VOL-954784',
-    location: 'Lincoln Harbor, NY, USA',
-    progress: 100,
-    driverName: 'Myrtle Ullrich',
-  },
-  {
-    name: 'VOL-342808',
-    location: 'Midtown East, NY, USA',
-    progress: 60,
-    driverName: 'Barry Schowalter',
-  },
-  {
-    name: 'VOL-343908',
-    location: 'Hoboken, NY, USA',
-    progress: 28,
-    driverName: 'Helen Jacobs',
-  },
+  // {
+  //   name: 'VOL-954784',
+  //   location: 'Lincoln Harbor, NY, USA',
+  //   progress: 100,
+  //   driverName: 'Myrtle Ullrich',
+  // },
+  // {
+  //   name: 'VOL-342808',
+  //   location: 'Midtown East, NY, USA',
+  //   progress: 60,
+  //   driverName: 'Barry Schowalter',
+  // },
+  // {
+  //   name: 'VOL-343908',
+  //   location: 'Hoboken, NY, USA',
+  //   progress: 28,
+  //   driverName: 'Helen Jacobs',
+  // },
 ]
 
 const flyToLocation = (geolocation, index) => {
@@ -147,7 +147,7 @@ watch(activeIndex, () => {
 
 <template>
   <VLayout class="fleet-app-layout">
-    <VNavigationDrawer
+    <!-- <VNavigationDrawer
       v-model="isLeftSidebarOpen"
       width="320"
       absolute
@@ -173,7 +173,7 @@ watch(activeIndex, () => {
           </template>
         </VCardItem>
 
-        <!-- 👉 Perfect Scrollbar -->
+        👉 Perfect Scrollbar
         <PerfectScrollbar
           :options="{ wheelPropagation: false, suppressScrollX: true }"
           style="block-size: calc(100% - 60px);"
@@ -291,7 +291,7 @@ watch(activeIndex, () => {
           </VCardText>
         </PerfectScrollbar>
       </VCard>
-    </VNavigationDrawer>
+    </VNavigationDrawer> -->
 
     <VMain>
       <div class="h-100">

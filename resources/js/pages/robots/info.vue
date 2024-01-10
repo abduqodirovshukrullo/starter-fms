@@ -18,23 +18,23 @@ definePage({
 const tabs = [
   {
     icon: 'tabler-notes',
-    title: 'Sensor info',
+    title: 'Info',
   },
-  {
-    icon: 'tabler-notes',
-    title: 'Actions',
-  },
-  {
-    icon: 'tabler-notes',
-    title: 'Location history',
-  },
-  {
-    icon: 'tabler-notes',
-    title: 'Services',
-  },
+  // {
+  //   icon: 'tabler-notes',
+  //   title: 'Actions',
+  // },
+  // {
+  //   icon: 'tabler-notes',
+  //   title: 'Location history',
+  // },
+  // {
+  //   icon: 'tabler-notes',
+  //   title: 'Services',
+  // },
 ]
 
-const infoTab = ref(2)
+const infoTab = ref(0)
 
 const getRobotData = async ()=>{
   
@@ -44,7 +44,6 @@ onMounted((e)=>{
   window.Echo.channel('robotdata')
     .listen('.data.received', (e) => {
     console.log(e)
-    
   })
 })
 </script>
@@ -78,19 +77,33 @@ onMounted((e)=>{
           class="mt-6 disable-tab-transition"
           :touch="false"
         >
-        
-          <VWindowItem>
+        <VWindowItem>
+        <VRow>
+          <VCol
+            cols="4"
+          >
+         
             <SensorInfoTab/>
-          </VWindowItem>
-          <VWindowItem>
-            <ActionsTab/>
-          </VWindowItem>
-          <VWindowItem>
+         
+          </VCol>
+          <VCol
+            cols="8"
+          >
+          
             <LocationsInfoTab/>
-          </VWindowItem>
-          <VWindowItem>
+          </VCol>
+          
+        </VRow>
+      </VWindowItem>
+        
+         
+          <!-- <VWindowItem>
+            <ActionsTab/>
+          </VWindowItem> -->
+         
+          <!-- <VWindowItem>
             <ServicesTab/>
-          </VWindowItem>
+          </VWindowItem> -->
         </VWindow>
       </VCol> 
     </VRow>
