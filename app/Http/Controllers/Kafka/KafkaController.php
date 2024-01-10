@@ -27,7 +27,6 @@ class KafkaController extends Controller
             key: 'kafka key here'  
         );
         $producer = Kafka::publishOn('first_test')
-            ->withHeaders(['header-key' => 'header-value'])
             ->withMessage($message);
         $producer->send();
         return $this->respondSuccess('Success');

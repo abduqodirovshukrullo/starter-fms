@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Junges\Kafka\Facades\Kafka;
 use Junges\Kafka\Contracts\KafkaConsumerMessage;
 
-class KafkaConsumer extends Command
+class MqttConsumer extends Command
 {
     /**
      * The name and signature of the console command.

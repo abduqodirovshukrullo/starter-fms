@@ -38,8 +38,8 @@ return [
     /*
      | Kafka supports 4 compression codecs: none , gzip , lz4 and snappy
      */
-    'compression' => env('KAFKA_COMPRESSION_TYPE', 'snappy'),
-
+    // 'compression' => env('KAFKA_COMPRESSION_TYPE', 'snappy'),
+    'compression' => 'none',
     /*
      | Choose if debug is enabled or not.
      */
