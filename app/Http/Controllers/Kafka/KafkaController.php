@@ -23,7 +23,7 @@ class KafkaController extends Controller
         // $topic->produce(RD_KAFKA_PARTITION_UA, 0, "Message payload");
         $message = new Message(
             headers: ['header-key' => 'header-value'],
-            body: $request->all(),
+            body: ['data' => $request->all()],
             key: 'kafka key here'  
         );
         $producer = Kafka::publishOn('first_test')
