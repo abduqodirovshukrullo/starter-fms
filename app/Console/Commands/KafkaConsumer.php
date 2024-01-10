@@ -32,15 +32,14 @@ class KafkaConsumer extends Command
      */
     public function handle()
     {
-        $data = [];
+        $event = RobotDataReceived::class;
         $consumer = Kafka::createConsumer(['first_test'])
         
-        ->withHandler(function (KafkaConsumerMessage $message) use($data){
-            event(new RobotDataReceived($data));
+        ->withHandler(function (KafkaConsumerMessage $message)use ($event) {
+            ($event)::dispatch($message->getBody());
             $this->info('Received message: ' . json_encode($message->getBody()));
-            $data = $message->getBody();
         })->build();
-        
+        event(new RobotDataReceived('here we go'));
         $consumer->consume();
     }
 }
