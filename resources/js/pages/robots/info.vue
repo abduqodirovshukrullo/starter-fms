@@ -44,6 +44,7 @@ onMounted((e)=>{
   window.Echo.channel('robotdata')
     .listen('.data.received', (e) => {
     console.log(e)
+    
   })
 })
 </script>
