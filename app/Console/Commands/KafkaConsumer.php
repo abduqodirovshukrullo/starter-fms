@@ -31,7 +31,7 @@ class KafkaConsumer extends Command
     public function handle()
     {
         $consumer = Kafka::createConsumer(['first_test'])
-        ->withBrokers('localhost:9092')
+        ->withBrokers('3.34.191.108:9092')
         ->withAutoCommit()
         ->withHandler(function(KafkaConsumerMessage $message) {
             Log::info(json_encode($message));
