@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RobotDataReceived implements ShouldBroadcast
+class RobotDataReceived
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
