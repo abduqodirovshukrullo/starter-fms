@@ -11,6 +11,8 @@ use Junges\Kafka\Message\Message;
 class KafkaController extends Controller
 {
     public function produce(Request $request){
+
+        Log::info($request,'producer');
         // $conf = new \RdKafka\Conf();
         // $conf->set('log_level', (string) LOG_DEBUG);
         // $conf->set('debug', 'all');
