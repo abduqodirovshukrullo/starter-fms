@@ -21,18 +21,15 @@ class RobotDataReceived implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        $this->data = [
-            'test',
-            'test'
-        ];
+        $this->data = $data;
     }
 
     public function broadcastWith()
     {
          //echo"broadcastWith";
-        return  ['welcome'=>'welcome to the club'];
+        return $this->data;
     }
 
 
