@@ -22,6 +22,5 @@ class KafkaController extends Controller
         $producer->send();
         event(new RobotDataReceived('here we go'));
         return $this->respondSuccess('Success');
-
     }
 }
