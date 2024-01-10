@@ -12,9 +12,6 @@ use Junges\Kafka\Message\Message;
 class KafkaController extends Controller
 {
     public function produce(Request $request){
-
-        Log::info('producer______');    
-        Log::info($request->all());
         $message = new Message(
             headers: ['header-key' => 'header-value'],
             body: ['data' => $request->all()],
