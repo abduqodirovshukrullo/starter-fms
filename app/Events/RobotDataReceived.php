@@ -9,9 +9,8 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class RobotDataReceived
+class RobotDataReceived implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -24,7 +23,6 @@ class RobotDataReceived
      */
     public function __construct($data)
     {
-        Log::info('event triggered');
         $this->data = $data;
     }
 
