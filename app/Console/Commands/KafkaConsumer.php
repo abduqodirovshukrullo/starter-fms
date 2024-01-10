@@ -39,7 +39,6 @@ class KafkaConsumer extends Command
             ($event)::dispatch($message->getBody());
             $this->info('Received message: ' . json_encode($message->getBody()));
         })->build();
-        event(new RobotDataReceived('here we go'));
         $consumer->consume();
     }
 }
