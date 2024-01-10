@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Junges\Kafka\Facades\Kafka;
 use Junges\Kafka\Contracts\KafkaConsumerMessage;
 
+
+
 class KafkaConsumer extends Command
 {
     /**
@@ -34,11 +36,14 @@ class KafkaConsumer extends Command
         
         $consumer = Kafka::createConsumer(['first_test'])
         
-        ->withHandler(function (KafkaConsumerMessage $message) {
-            event(new RobotDataReceived($message->getBody()));
-            $this->info('Received message: ' . json_encode($message->getBody()));
-        })->build();
+        ->withHandler(new MessageHandler)->build();
         
         $consumer->consume();
+    }
+}
+
+class MessageHandler{
+    public function __invoke(\Junges\Kafka\Contracts\KafkaConsumerMessage $message){
+        event(new RobotDataReceived($message->getBody()));
     }
 }
