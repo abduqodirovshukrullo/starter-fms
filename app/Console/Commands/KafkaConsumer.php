@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\RobotDataReceived;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Junges\Kafka\Facades\Kafka;
@@ -31,18 +32,11 @@ class KafkaConsumer extends Command
     public function handle()
     {
         $consumer = Kafka::createConsumer(['first_test'])
+        
         ->withHandler(function (KafkaConsumerMessage $message) {
+            event(new RobotDataReceived());
             $this->info('Received message: ' . json_encode($message->getBody()));
         })->build();
-
-    // $consumer->consume();
-    //     $consumer = Kafka::createConsumer(['first_test'])
-    //     ->withBrokers('localhost:9092')
-    //     ->withAutoCommit()
-    //     ->withHandler(function(KafkaConsumerMessage $message) {
-    //         Log::info(json_encode($message));
-    //     })
-    //     ->build();
         
         $consumer->consume();
     }

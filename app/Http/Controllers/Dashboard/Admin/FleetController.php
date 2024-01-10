@@ -14,8 +14,9 @@ class FleetController extends Controller
 {
 
     public function list(Request $request){
+
         $fleets = Fleet::query();
-        event(new RobotDataReceived());
+        
         if($request->type){
             $fleets = $fleets->where('type',$request->type);
         }
@@ -31,12 +32,15 @@ class FleetController extends Controller
     }
 
     public function create(CreateFleetRequest $request){
+
         $request = $request->validated();
+
         $fleet = Fleet::create([
             'number'=>$request['number'],
             'type'=>$request['type'],
             'status'=>0//new
         ]);
+        
         $fleetDetails = FleetDetail::create([
             'fleet_id'=>$fleet->id,
             'name'=>$request['name']

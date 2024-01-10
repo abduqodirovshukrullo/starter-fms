@@ -11,16 +11,9 @@ use Junges\Kafka\Message\Message;
 class KafkaController extends Controller
 {
     public function produce(Request $request){
-
+        
         Log::info('producer______');    
         Log::info($request->all());
-        // $conf = new \RdKafka\Conf();
-        // $conf->set('log_level', (string) LOG_DEBUG);
-        // $conf->set('debug', 'all');
-        // $rk = new \RdKafka\Producer($conf);
-        // $rk->addBrokers("127.0.0.1:9092");
-        // $topic = $rk->newTopic("first_test");
-        // $topic->produce(RD_KAFKA_PARTITION_UA, 0, "Message payload");
         $message = new Message(
             headers: ['header-key' => 'header-value'],
             body: ['data' => $request->all()],
@@ -30,5 +23,6 @@ class KafkaController extends Controller
             ->withMessage($message);
         $producer->send();
         return $this->respondSuccess('Success');
+
     }
 }
