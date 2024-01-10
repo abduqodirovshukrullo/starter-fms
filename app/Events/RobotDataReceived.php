@@ -24,7 +24,6 @@ class RobotDataReceived implements ShouldBroadcast
      */
     public function __construct($data)
     {
-        Log::info('event triggered');
         $this->data = $data;
     }
 

@@ -13,9 +13,7 @@ class KafkaController extends Controller
 {
     public function produce(Request $request){
         $message = new Message(
-            headers: ['header-key' => 'header-value'],
-            body: ['data' => $request->all()],
-            key: 'kafka key here'  
+            body: ['body' => $request->all()],
         );
         $producer = Kafka::publishOn('first_test')
             ->withMessage($message);
