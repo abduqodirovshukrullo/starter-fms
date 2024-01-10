@@ -20,7 +20,7 @@ class KafkaController extends Controller
         $producer = Kafka::publishOn('first_test')
             ->withMessage($message);
         $producer->send();
-        event(new RobotDataReceived('here we go'));
+        // event(new RobotDataReceived('here we go'));
         return $this->respondSuccess('Success');
     }
 }
