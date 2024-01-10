@@ -4,7 +4,7 @@ return [
     /*
      | Your kafka brokers url.
      */
-    'brokers' => env('KAFKA_BROKERS', 'localhost:9092'),
+    'brokers' => env('KAFKA_BROKERS', '3.34.191.108:9092'),
 
     /*
      | Kafka consumers belonging to the same consumer group share a group id.
@@ -38,8 +38,8 @@ return [
     /*
      | Kafka supports 4 compression codecs: none , gzip , lz4 and snappy
      */
-    // 'compression' => env('KAFKA_COMPRESSION_TYPE', 'snappy'),
-    'compression' => 'none',
+    'compression' => env('KAFKA_COMPRESSION_TYPE', 'snappy'),
+    // 'compression' => 'none',
     /*
      | Choose if debug is enabled or not.
      */
