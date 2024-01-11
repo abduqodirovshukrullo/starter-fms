@@ -81,7 +81,7 @@ const emit = defineEmits([
 ])
 
 const formData = ref({
-  topic: 'from_server',
+  topic: 'robotCommand',
   Target_X:null,
   Target_Y:null
 })

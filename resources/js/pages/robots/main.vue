@@ -75,6 +75,11 @@ const headers = [
   {
     title: 'Status',
     key: 'status'
+  },
+  {
+    title: 'Action',
+    key: 'actions',
+    sortable: false
   }
 ]
 </script>
@@ -128,6 +133,11 @@ const headers = [
           >
             {{ item.status }}
           </VChip>
+        </template>
+        <template #item.actions="{ item }">
+          <IconBtn :to="{ name: 'robots-info' }">
+            <VIcon icon="tabler-eye" />
+          </IconBtn>
         </template>
         <template #bottom>
           <VDivider />

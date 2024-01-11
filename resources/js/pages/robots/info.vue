@@ -60,8 +60,8 @@ const setRobotData = async (data)=>{
 onMounted((e)=>{
   window.Echo.channel('robotdata')
     .listen('.data.received', (e) => {
-      setRobotData(e.data.body)
-      console.log(e.data.body);
+      setRobotData(e.data)
+      console.log(e.data);
   })
 })
 

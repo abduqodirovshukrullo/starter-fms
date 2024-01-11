@@ -32,16 +32,23 @@ export default [
     action: 'monitor',
     subject: 'own',
     children:[
+      // {
+      //   title: 'Vehicles',
+      //   to: { name: 'vehicles-main' },
+      //   icon: { icon: 'tabler-bus' },
+      //   action: 'monitor',
+      //   subject: 'own',
+      // },
       {
-        title: 'Vehicles',
-        to: { name: 'vehicles-main' },
-        icon: { icon: 'tabler-bus' },
+        title: 'Robots',
+        to: { name: 'robots-main' },
+        icon: { icon: 'tabler-brand-discord' },
         action: 'monitor',
         subject: 'own',
       },
       {
-        title: 'Robots',
-        to: { name: 'robots-main' },
+        title: 'Robots Info',
+        to: { name: 'robots-info' },
         icon: { icon: 'tabler-brand-discord' },
         action: 'monitor',
         subject: 'own',
