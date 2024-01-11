@@ -36,16 +36,61 @@ const tabs = [
 
 const infoTab = ref(0)
 
-const getRobotData = async ()=>{
-  
+const robotData = ref({
+  Send:0,
+  Target_X:0,
+  Target_Y:0,
+  Current_X:0,
+  Current_Y:0,
+  RobotStatus:0,
+  Battery:0,
+  Velocity:0,
+  Distance:0,
+  EmgStop:0,
+  AutoDrv:0,
+  Waring:0,
+  Light:0,
+  SetPosition:0
+})
+
+const setRobotData = async (data)=>{
+  robotData.value = data.Data
 }
 
 onMounted((e)=>{
   window.Echo.channel('robotdata')
     .listen('.data.received', (e) => {
-    console.log(e)
+      setRobotData(e.data.body)
+      console.log(e.data.body);
   })
 })
+
+const snackColor = ref()
+const snackMessage = ref()
+const isSnackbarVisible = ref()
+const onProgress = ref(false)
+const sendCommand = async formData => {
+  onProgress.value = true
+  const { data, pending, error, refresh }  = await useApi(createUrl("/kafka/produce")).post(formData)
+  
+  if(!pending){
+    onProgress.value = false
+    if(error.value){
+      
+      isSnackbarVisible.value = true
+      snackMessage.value = "Error"
+      snackColor.value = 'error'
+      return
+    }
+    isSnackbarVisible.value = true
+    snackMessage.value = "Success"
+    snackColor.value = 'success'
+    console.log(data)
+    return
+  }
+  
+}
+
 </script>
 
 <template>
@@ -83,14 +128,18 @@ onMounted((e)=>{
             cols="4"
           >
          
-            <SensorInfoTab/>
+            <SensorInfoTab :infoData="robotData"
+              @sendToRobot = "sendCommand"
+              :onProgress = "onProgress"
+            />
          
           </VCol>
           <VCol
             cols="8"
           >
-          
-            <LocationsInfoTab/>
+            <LocationsInfoTab
+              :infoData = "robotData"
+            />
           </VCol>
           
         </VRow>
@@ -107,6 +156,14 @@ onMounted((e)=>{
         </VWindow>
       </VCol> 
     </VRow>
+    <VSnackbar
+        v-model="isSnackbarVisible"
+        location="top right"
+        variant="flat"
+        :color="snackColor"
+      >
+      {{ snackMessage }}
+    </VSnackbar>
   </section>
 
 </template>

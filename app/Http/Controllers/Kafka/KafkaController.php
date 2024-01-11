@@ -12,10 +12,14 @@ use Junges\Kafka\Message\Message;
 class KafkaController extends Controller
 {
     public function produce(Request $request){
+        $topic = 'first_test';
+        if($request->topic){
+            $topic = $request->topic;
+        }
         $message = new Message(
             body: ['body' => $request->all()],
         );
-        $producer = Kafka::publishOn('first_test')
+        $producer = Kafka::publishOn($topic)
             ->withMessage($message);
         $producer->send();
         // event(new RobotDataReceived('here we go'));

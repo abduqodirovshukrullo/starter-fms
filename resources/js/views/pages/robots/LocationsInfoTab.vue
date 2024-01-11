@@ -10,9 +10,16 @@ import { useDisplay } from 'vuetify'
 import fleetImg from '@images/misc/fleet-car.png'
 
 const { isLeftSidebarOpen } = useResponsiveLeftSidebar()
-const accessToken = 'pk.eyJ1Ijoic29jaWFsZXhwbG9yZXIiLCJhIjoiREFQbXBISSJ9.dwFTwfSaWsHvktHrRtpydQ'
+const accessToken = 'pk.eyJ1Ijoic2h1a3VyaWxsb2FiZHVrb2Rpcm92IiwiYSI6ImNscjhsdzg3cTJ1MHcya215M3JkeXlpY2QifQ.i7H8V2COJFEHvKm1faw8tw'
 const map = ref()
 const vuetifyDisplay = useDisplay()
+
+
+const props = defineProps({
+  infoData: {
+    type: Object
+  },
+})
 
 definePage({ meta: { layoutWrapperClasses: 'layout-content-height-fixed' } })
 
@@ -40,8 +47,8 @@ const geojson = {
       geometry: {
         type: 'Point',
         coordinates: [
-          -73.999024,
-          40.75249842,
+          127.028747,
+          37.263333,
         ],
       },
     },
@@ -84,12 +91,10 @@ onMounted(() => {
   mapboxgl.accessToken = accessToken
   map.value = new mapboxgl.Map({
     container: 'mapContainer',
-    style: 'mapbox://styles/mapbox/light-v9',
-    center: [
-      -73.999024,
-      40.75249842,
-    ],
-    zoom: 12.25,
+    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    center: [127.028747, 37.263333], // starting position [lng, lat]
+    zoom: 12, // starting zoom
+
   })
   for (let index = 0; index < geojson.features.length; index++)
     new mapboxgl.Marker({ element: refCars.value[index] }).setLngLat(geojson.features[index].geometry.coordinates).addTo(map.value)
@@ -131,9 +136,18 @@ const flyToLocation = (geolocation, index) => {
     isLeftSidebarOpen.value = false
   map.value.flyTo({
     center: geolocation,
-    zoom: 16,
+    zoom: 12,
   })
 }
+
+watch([()=>props.infoData.Current_X,()=>props.infoData.Current_Y], ([long,lat]) => {
+  // console.log([long,lat],0);
+  
+  flyToLocation([long,lat],0)
+  new mapboxgl.Marker({ element: refCars.value[0] }).setLngLat([long,lat]).addTo(map.value)
+
+})
+
 
 watch(activeIndex, () => {
   refCars.value.forEach((car, index) => {

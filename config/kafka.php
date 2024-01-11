@@ -4,7 +4,7 @@ return [
     /*
      | Your kafka brokers url.
      */
-    'brokers' => env('KAFKA_BROKERS', 'localhost:9092'),
+    'brokers' => env('KAFKA_BROKERS', 'ec2-3-34-191-108.ap-northeast-2.compute.amazonaws.com:9092'),
 
     /*
      | Kafka consumers belonging to the same consumer group share a group id.
